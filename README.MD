@@ -150,3 +150,38 @@ Para os dados de teste foram obtidas fotos reais com as 3 pessoas juntas ou mais
 ![dataset-test.png](./assets/dataset-test.png)
 
 ![test-images.png](./assets/test-images.png)
+
+## Treino do modelo
+
+Saida do treino:
+
+```shell
+(tf) aecher@aecher-RYZEN:~/tf/projects/dio-challenge-neural-network-facial-recognize-challenge$ python train_model.py 
+2026-04-30 11:43:50.521994: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+/home/aecher/tf/lib/python3.12/site-packages/keras/src/export/tf2onnx_lib.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, "object"):
+GPU detectada: [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+Classes: ['alan', 'betina', 'maria']
+alan: 200 treino, 12 validacao
+betina: 201 treino, 10 validacao
+maria: 193 treino, 10 validacao
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1777560232.222148  140149 gpu_device.cc:2020] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 5196 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 5060, pci bus id: 0000:07:00.0, compute capability: 12.0
+Training config: {'head_lr': 2e-05, 'fine_tune_lr': 2e-05, 'fine_tune_layers': 40, 'dropout': [0.15, 0.15], 'early_stop_patience': 20, 'reduce_lr_patience': 20}
+Class weights: {'alan': 0.9, 'betina': 1.2, 'maria': 1.4}
+
+Predicoes por classe: {'alan': 10, 'betina': 10, 'maria': 12}
+
+=== Classification Report ===
+
+              precision    recall  f1-score   support
+
+        alan       1.00      0.83      0.91        12
+      betina       0.90      0.90      0.90        10
+       maria       0.83      1.00      0.91        10
+
+    accuracy                           0.91        32
+   macro avg       0.91      0.91      0.91        32
+weighted avg       0.92      0.91      0.91        32
+```
