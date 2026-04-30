@@ -3,7 +3,7 @@ import os
 import time
 
 nome = input("Digite o nome da pessoa: ")
-pasta = f"dataset/{nome}"
+pasta = f"dataset/train/{nome}"
 
 os.makedirs(pasta, exist_ok=True)
 

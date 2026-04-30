@@ -27,16 +27,21 @@ else:
 IMG_SIZE = 128
 BATCH_SIZE = 16
 SEED=123
-HEAD_EPOCHS = 50
+HEAD_EPOCHS = 70
 FINE_TUNE_EPOCHS = 70
-FINE_TUNE_LAYERS = 25
-HEAD_LEARNING_RATE = 3e-4
-FINE_TUNE_LEARNING_RATE = 1e-5
-FIRST_DROPOUT = 0.35
-SECOND_DROPOUT = 0.25
-EARLY_STOP_PATIENCE = 12
-REDUCE_LR_PATIENCE = 6
+FINE_TUNE_LAYERS = 40
+HEAD_LEARNING_RATE = 2e-5
+FINE_TUNE_LEARNING_RATE = 2e-5
+FIRST_DROPOUT = 0.15
+SECOND_DROPOUT = 0.15
+EARLY_STOP_PATIENCE = 20
+REDUCE_LR_PATIENCE = 20
 CHECKPOINT_MIN_VAL_ACCURACY = 0.70
+CLASS_WEIGHT_OVERRIDES = {
+    "maria": 1.4,
+    "betina": 1.2,
+    "alan":0.9,
+}
 
 DATASET_DIR = Path("dataset")
 TRAIN_DIR = DATASET_DIR / "train"
@@ -181,11 +186,18 @@ print(
     },
 )
 
+class_weight = {
+    index: CLASS_WEIGHT_OVERRIDES.get(class_name, 1.0)
+    for index, class_name in enumerate(class_names)
+}
+print("Class weights:", dict(zip(class_names, [class_weight[i] for i in range(len(class_names))])))
+
 history = model.fit(
     train_ds,
     validation_data=val_ds,
     epochs=HEAD_EPOCHS,
     callbacks=make_callbacks(),
+    class_weight=class_weight,
 )
 
 # Ajuste fino das últimas camadas do MobileNetV2 com learning rate menor.
@@ -205,6 +217,7 @@ fine_tune_history = model.fit(
     epochs=HEAD_EPOCHS + FINE_TUNE_EPOCHS,
     initial_epoch=len(history.history["loss"]),
     callbacks=make_callbacks(),
+    class_weight=class_weight,
 )
 
 # 💾 carregar o melhor checkpoint salvo

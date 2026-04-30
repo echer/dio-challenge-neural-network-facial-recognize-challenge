@@ -6,8 +6,8 @@ from tensorflow.keras.models import load_model
 
 
 IMG_SIZE = 128
-CONFIDENCE_THRESHOLD = 0.9
-MIN_CONFIDENCE_GAP = 0.4
+CONFIDENCE_THRESHOLD = 0.6
+MIN_CONFIDENCE_GAP = 0.2
 FACE_MARGIN = 0.05
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 
@@ -22,8 +22,8 @@ def detect_faces(image, face_cascade):
     return face_cascade.detectMultiScale(
         gray,
         scaleFactor=1.1,
-        minNeighbors=8,
-        minSize=(100, 100),
+        minNeighbors=10,
+        minSize=(150, 150),
     )
 
 
