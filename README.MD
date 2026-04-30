@@ -562,3 +562,5 @@ Ainda assim foi feito um teste de detecção em tempo real utilizando o `detecti
 detectar e classificar as faces com algumas modificações para mostrar um rotulo mais assertivo.
 
 ![](./assets/detection.png)
+
+PS: As imagens de rosto foram aplicadas blur.
